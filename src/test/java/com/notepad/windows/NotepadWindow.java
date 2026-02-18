@@ -18,7 +18,8 @@ public class NotepadWindow {
     }
 
     public void typeText(String text){
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.className(textEditor)));
-        driver.findElement(By.className(textEditor)).sendKeys(text);
+        driver.switchTo().activeElement().sendKeys(text);
+//        wait.until(ExpectedConditions.presenceOfElementLocated(By.className(textEditor)));
+//        driver.findElement(By.className(textEditor)).sendKeys(text);
     }
 }
