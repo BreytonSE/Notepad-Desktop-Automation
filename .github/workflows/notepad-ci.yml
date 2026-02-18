@@ -1,0 +1,31 @@
+name: Windows Desktop Automation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  run-desktop-tests:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install WinAppDriver
+        run: |
+          choco install winappdriver -y
+
+      - name: Set WINAPPDRIVER_HOME
+        run: echo "WINAPPDRIVER_HOME=C:\Program Files\Windows Application Driver\Windows Application Driver" >> $env:GITHUB_ENV
+
+      - name: Build and Run Tests
+        run: mvn clean test
